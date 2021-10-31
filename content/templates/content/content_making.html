@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>content_making</h1>
+    {% if error %}
+    <h3> {{ error }}</h3>
+    {% endif %}
+    <div>
+
+        <form action="/content/make/" method="post" id="content-make" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <h5>콘텐츠 제목을 입력해 주세요</h5>
+                <input type="text" name="title_name" />
+
+                <h5>콘텐츠 소제목을 입력해 주세요</h5>
+                <input type="text" name="sub_title_name" />
+
+                <h5>타이틀 이미지를 올려 주세요</h5>
+                <input type="file" id="image" name="title_image" />
+
+                <h5>콘텐츠 진행 날짜와 시간을 입력해 주세요</h5>
+                <input type="datetime-local" name="content_date" />
+
+                <h5>콘텐츠를 몇시간동안 진행하는지 입력해 주세요</h5>
+                <input type="number" name="duration" />
+
+                <h5>콘텐츠 진행 장소를 입력해 주세요</h5>
+                <input type="text" name="location" />
+
+                <h5>콘텐츠 참가 인원 수를 입력해주세요</h5>
+                <input type="number" name="people_number" />
+
+                <h5>콘텐츠 참가 가능한 아이의 나이를 입력해주세요</h5>
+                <p> 최소나이(개월 수) <input type="number" name="age_min" /> </p>
+                <p> 최대나이(개월 수) <input type="number" name="age_max" /> </p>
+
+                <h5>콘텐츠 가격을 입력해 주세요(단위 : 원)</h5>
+                <input type="number" name="price" />
+
+                <h5>콘텐츠 세부 내용을 입력해 주세요</h5>
+                <p> 이미지 입력하기  <input type="file" id="image" name="detail_img" /> </p>
+                <p> 상세 설명 입력하기 <input type="text" name="detail" /> </p>
+
+            </div>
+
+
+
+        </form>
+        <input type="submit" form="content-make" />
+
+    </div>
+
+
+</body>
+</html>
