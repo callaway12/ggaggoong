@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import json
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+        ## 추가 목록 ##
+    'django.contrib.sites',
+    # 'accounts.apps.AccountsConfig',
+    # 'rest_framework'
+
+    
     'corsheaders',
     'user',
 ]
@@ -152,4 +161,16 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
+secret_file = os.path.join(BASE_DIR, "secrets.json")
+secrets = None
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+    
 
+SECRET_KEY = secrets['SECRET_KEY']
+## 카카오 키들은 나중에 accounts.view에서 쓰일 예정
+SOCIAL_OUTH_CONFIG = {
+    'KAKAO_REST_API_KEY': "d58adb12c9395169fcff995830923252",#secrets['KAKAO_REST_API_KEY'],
+    "KAKAO_REDIRECT_URI": "http://127.0.0.1:8000/user/kakao/login/callback",#secrets['KAKAO_REDIRECT_URI'],
+    "KAKAO_SECRET_KEY": secrets['KAKAO_SECRET_KEY']
+}
