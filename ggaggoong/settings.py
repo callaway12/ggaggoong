@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 import os
 import json
@@ -49,6 +49,22 @@ INSTALLED_APPS = [
     
     'corsheaders',
     'user',
+
+    # django rest framework
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    # dj-rest-auth
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    # django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
+
 ]
 
 MIDDLEWARE = [
@@ -93,6 +109,10 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -172,5 +192,17 @@ SECRET_KEY = secrets['SECRET_KEY']
 SOCIAL_OUTH_CONFIG = {
     'KAKAO_REST_API_KEY': "d58adb12c9395169fcff995830923252",#secrets['KAKAO_REST_API_KEY'],
     "KAKAO_REDIRECT_URI": "http://127.0.0.1:8000/user/kakao/login/callback",#secrets['KAKAO_REDIRECT_URI'],
-    "KAKAO_SECRET_KEY": secrets['KAKAO_SECRET_KEY']
+    "KAKAO_SECRET_KEY": "W5d1wGR80h3LiWBCuamsowb5QEOIKyjE"
 }
+
+REST_USE_JWT = True
+# SITE_ID = 1
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+LOGIN_REDIRECT_URL = '/user/home'

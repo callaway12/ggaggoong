@@ -1,3 +1,5 @@
+{% load socialaccount %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +13,14 @@
 
 
     <a href="signup">가입하기</a>
-    <!-- <a href="/user/kakao-login">카카오로그인</a> -->
+    <a href="{% provider_login_url 'naver' %}">네이버 로그인</a>
+    {% if user.is_authenticated %}
+        <h1>{{ user }}</h1>
+    {% else %}
+    <h1>naver not logedin</h1>
+    {% endif %}
+    {{ user }}
+    <a href="/user/kakao_login">카카오로그인</a>
 
 
 </body>
