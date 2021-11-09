@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <h1>content_making</h1>
     {% if error %}
-    <h3> {{ error }}</h3>
+    <h3> {{ error }} </h3>
     {% endif %}
     <div>
 
@@ -15,45 +16,119 @@
             {% csrf_token %}
             <div>
                 <h5>콘텐츠 제목을 입력해 주세요</h5>
-                <input type="text" name="title_name" />
+                <input type="text" name="title_name" id="title_name" />
 
                 <h5>콘텐츠 소제목을 입력해 주세요</h5>
-                <input type="text" name="sub_title_name" />
+                <input type="text" name="sub_title_name" id="sub_title_name" />
 
                 <h5>타이틀 이미지를 올려 주세요</h5>
-                <input type="file" id="image" name="title_image" />
+                <input type="file" name="title_image" id="title_image" />
 
                 <h5>콘텐츠 진행 날짜와 시간을 입력해 주세요</h5>
-                <input type="datetime-local" name="content_date" />
+                <input type="datetime-local" name="content_date" id="content_date" />
 
                 <h5>콘텐츠를 몇시간동안 진행하는지 입력해 주세요</h5>
-                <input type="number" name="duration" />
+                <input type="number" name="duration" id="duration" />
 
                 <h5>콘텐츠 진행 장소를 입력해 주세요</h5>
-                <input type="text" name="location" />
+                <input type="text" name="location" id="location" />
 
                 <h5>콘텐츠 참가 인원 수를 입력해주세요</h5>
-                <input type="number" name="people_number" />
+                <input type="number" name="people_number" id="people_number" />
 
                 <h5>콘텐츠 참가 가능한 아이의 나이를 입력해주세요</h5>
-                <p> 최소나이(개월 수) <input type="number" name="age_min" /> </p>
-                <p> 최대나이(개월 수) <input type="number" name="age_max" /> </p>
+                <p> 최소나이(개월 수) <input type="number" name="age_min" id="age_min"/> </p>
+                <p> 최대나이(개월 수) <input type="number" name="age_max" id="age_max"/> </p>
 
                 <h5>콘텐츠 가격을 입력해 주세요(단위 : 원)</h5>
-                <input type="number" name="price" />
+                <input type="number" name="price" id="price" />
 
-                <h5>콘텐츠 세부 내용을 입력해 주세요</h5>
-                <p> 이미지 입력하기  <input type="file" id="image" name="detail_img" /> </p>
-                <p> 상세 설명 입력하기 <input type="text" name="detail" /> </p>
+                <div onclick="count_down()">삭제하기 버튼</div>
+                <div onclick="count_up()">추가하기 버튼</div>
 
             </div>
-
-
-
         </form>
-        <input type="submit" form="content-make" />
+        <div id = "detail_text" form = "content-make">
+        </div>
+        <button type="button" onclick="sendData()">제출</button>
 
     </div>
+    <script>
+        let detail_num = 0
+        function count_up(){
+            if (detail_num <= 10){
+                let con_add = `<div id="${detail_num}">
+                <h5>콘텐츠 세부 내용 ${detail_num + 1} 을 입력해 주세요</h5>
+                <p> 이미지 입력하기  <input type='file' name='detail_img_${detail_num}' id="detail_img_${detail_num}"/> </p>
+                <p> 상세 설명 입력하기 <input type='text' name='detail_${detail_num}' id="detail_${detail_num}"/> </p>
+                </div>`;
+
+                $("#detail_text").append(con_add);
+                detail_num = detail_num + 1;
+            }
+
+
+        }
+
+        function count_down(){
+            if (detail_num > 0){
+
+                detail_num = detail_num - 1;
+                $(`#${detail_num}`).remove();
+            }
+        }
+        function getCsrfToken(){
+            return document.cookie
+                .split(';')
+                .find((item) => item.includes('csrftoken'))
+                .split('=')[1];
+        }
+
+        async function sendData(){
+            const detailLength = detail_num;
+            const detailList = [];
+
+            const bodyForm = new FormData();
+            // add other elements
+            bodyForm.append("detail_count", detailLength)
+            bodyForm.append("title_name", document.querySelector(`input#title_name`).value)
+            bodyForm.append("sub_title_name", document.querySelector(`input#sub_title_name`).value)
+            bodyForm.append("title_image", document.querySelector(`input#title_image`).files[0])
+            bodyForm.append("content_date", document.querySelector(`input#content_date`).value)
+            bodyForm.append("duration", document.querySelector(`input#duration`).value)
+            bodyForm.append("location", document.querySelector(`input#location`).value)
+            bodyForm.append("people_number", document.querySelector(`input#people_number`).value)
+            bodyForm.append("age_min", document.querySelector(`input#age_min`).value)
+            bodyForm.append("age_max", document.querySelector(`input#age_max`).value)
+            bodyForm.append("price", document.querySelector(`input#price`).value)
+
+
+            for (let i = 0; i < detailLength; i++) {
+                
+                bodyForm.append(`detail_${i}`, document.querySelector(`input#detail_${i}`).value);
+                bodyForm.append(`detail_img_${i}`, document.querySelector(`input#detail_img_${i}`).files[0]);
+            }
+            
+
+            let response = await fetch("/content/make/", {
+                method: "POST",
+                headers: {
+                    // "Content-Type": "multipart/form-data",
+                    "X-CSRFToken": getCsrfToken(),
+                },
+                body: bodyForm,
+            });
+            
+            if(response.ok) {
+                await alert("성공");
+                window.location.href = response.url;
+            } else {
+                let responseBody = await response.json()
+                alert(responseBody["error"]);
+            }
+        }
+
+    </script>
 
 
 </body>

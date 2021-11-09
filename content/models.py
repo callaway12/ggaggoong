@@ -23,7 +23,6 @@ class Contents(models.Model):
 
 class Contents_Detail(models.Model):
     detail = models.CharField(max_length=500)
-    # detail_number = models.IntegerField()
     detail_img = models.ImageField(
         upload_to="content/detail_image/",
         blank=True,
@@ -31,3 +30,4 @@ class Contents_Detail(models.Model):
     )
     contents_id = models.ForeignKey('Contents', on_delete=models.CASCADE, null=True)
     # host_id = models.Foreignkey('Contents.host_id', on_delete=models.CASCADE, null=True)
+

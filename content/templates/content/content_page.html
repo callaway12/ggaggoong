@@ -7,6 +7,29 @@
 <body>
     <h1>content_page</h1>
 
-    <div> {{ new_content.title_name }} </div>
+    <div> 콘텐츠 제목 : {{ new_content.title_name }} </div>
+    <div> 콘텐츠 소제목 : {{ new_content.sub_title_name }} </div>
+
+    {% if new_content.title_img %}
+    <div style="width:600px">
+        <img src="{{ new_content.title_img.url }}" style="width:100%;"/>
+    </div>
+    {% endif %}
+    <div> 콘텐츠 날짜 : {{ new_content.content_date }} </div>
+    <div> 콘텐츠 진행 시간 : {{ new_content.duration }} </div>
+    <div> 콘텐츠 위치 : {{ new_content.location }} </div>
+    <div> 콘텐츠 제한 인원 : {{ new_content.people_number }} </div>
+    <div> 콘텐츠 참가 나이 : {{ new_content.age_min }} ~ {{ new_content.age_max }} </div>
+    <div> 콘텐츠 가격 : {{ new_content.price }} </div>
+
+    <h3> 상세 설명</h3>
+    {% for item in new_detail_content %}
+    {% if item.detail_img %}
+    <div style="width:600px">
+        <img src="{{ item.detail_img.url }}" style="width:100%" />
+    </div>
+    {% endif %}
+    <div> {{ item.detail }} </div>
+    {% endfor %}
 </body>
 </html>
