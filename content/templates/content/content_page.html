@@ -18,17 +18,19 @@
     {% endif %}
 
 
+<br/>
+<br/>
 <div class="row gx-4 gx-lg-5 align-items-center">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                          {% if new_content.title_img %}
                         <img class="card-img-top mb-5 mb-md-0" src="{{ new_content.title_img.url }}" style="width:100%;" alt="...">
                    {% endif %}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
 
                         <h3 class="display-5 fw-bolder">{{ new_content.title_name }}</h3>
-                        <div class="fs-5 mb-5">
-                            <span>{{ new_content.sub_title_name }}</span>
+                        <div class="fs-5 mb-3">
+                            <h4>{{ new_content.sub_title_name }}</h4>
                         </div>
 
                         <div class ="detail"> 진행일자 : {{ new_content.content_date }} </div>
@@ -52,14 +54,26 @@
 <hr/>
 
     <h3> 상세 설명</h3>
+<br/>
+<br/>
+<div >
+
     {% for item in new_detail_content %}
     {% if item.detail_img %}
-    <div style="width:600px">
-        <img src="{{ item.detail_img.url }}" style="width:100%" />
+    <div style ="text-align : center;">
+        <img src="{{ item.detail_img.url }}" style="width:50%" />
     </div>
+    <br/>
     {% endif %}
-    <div> {{ item.detail }} </div>
+
+    <br/>
+    <div style ="text-align : center;"> {{ item.detail }} </div>
     {% endfor %}
+    <br/>
+    <br/>
+</div>
+
+
     
 <br/>
 <br/>
@@ -80,18 +94,13 @@
 {% endif %}
 {% endif %}
 
-<br/><br/>
-new_content:  {{ new_content.id }}
-<br/>
-  user_id :  {{ user.id }}
-<br/>
-  user_name :  {{ user.mom_name }}
 
-<br/>
+<hr/>
+<h3>문의하기</h3>
 
 <div>
 
-    <table border='1' class='faqTable table table-hover'>
+    <table border='1' class='faqTable table table-hover text-center'>
         <tr>
             <td>번호</td>
             <td>질문</td>
@@ -122,10 +131,15 @@ new_content:  {{ new_content.id }}
 
 </div>
 
+<div class="input-group">
+  <span class="input-group-text">문의하기</span>
+  <textarea class=" faqQuestion form-control " aria-label="With textarea"></textarea>
 
-    <textarea class='faqQuestion' placeholder="문의"></textarea>
+
+
+<!--    <textarea class='faqQuestion' placeholder="문의"></textarea>-->
     <input type="button" class="btnSend" value="전송">
-
+</div>
 
 <br>
 
@@ -249,12 +263,8 @@ new_content:  {{ new_content.id }}
     
 
 </script>
-<style>
 
-
-    .sss{
-    box-size : 30px
-    }
-</style>
+<br/>
+<br/>
 
 {% endblock %}

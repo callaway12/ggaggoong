@@ -68,6 +68,8 @@ def signup(request):
             if user is not None:
                 auth.login(request, user)
                 return redirect('/user/home') #render(request, 'home.html', {'user':user})
+    elif request.method == "GET" and request.user.id:
+        return redirect('/user/home')
     print("회원가입 안됨")
     return render(request, 'signup.html') 
 
@@ -206,19 +208,60 @@ def mypage(request):
         # 호스트면 이거 보여주고 일반이면 안보여주고, 
         # to-do : 일반 사용자가 해당 컨텐츠에 지원하고 결제하는 부분까지 해야함
         try:
-            print(User.objects.get(id=request.user.id))
-            print(Contents.objects.filter(id=request.user.id))
-            print(FAQ.objects.filter(questioner=request.user.id))
-            contents = Contents.objects.filter(host_id=request.user.id).order_by('-created_at')
+            # print(User.objects.get(id=request.user.id))
+            # print(Contents.objects.filter(id=request.user.id))
+            # print(FAQ.objects.filter(questioner=request.user.id))
+            # host_contents = Contents.objects.filter(host_id=request.user.id).order_by('-created_at')
             user = User.objects.get(id=request.user.id)
             faqs = FAQ.objects.filter(questioner=request.user.id).order_by('-created_at')
             reserves = Reserve.objects.filter(reserve_user=request.user.id).order_by('-created_at')
-            print(user)
+
+            print(reserves.content_date)
+
+
+            total_reserve_price = 0
+            total_reserve_price_flag = False
+            remain_reserves = []
+            for reserve in reserves:
+                total_reserve_price += reserve.price
+                print('remain')
+                if reserve.content_date > datetime.datetime.now():
+                    remain_reserves.append(reserve)
+                    print(reserve.content_date)
+                    print(datetime.datetime.now())
+            print(remain_reserves)
+
+            if total_reserve_price > 0:
+                total_reserve_price_flag = True
+
+            reserves_len_flag = False
+            reserves_len = len(reserves)
+            if reserves_len> 0:
+                reserves_len_flag = True
+
+            host_flag = False
+            host_contents_flag = False
+            if Host.objects.get(user_id = request.user).exist():
+                host_flag = True
+                host = Host.objects.get(user_id = request.user)
+                if Contents.objects.get(host_id = host).exist():
+                    host_contents_flag = True
+                    host_contents = Contents.objects.get(host_id = host).exist()
+            
+
+            
+            
             context= {
                 'user' : user,
-                'contests' : contents,
+                'host_contents' : host_contents,
                 'faqs' : faqs,
+                'host_flag' : host_flag,
+                'host_contents_flag' : host_contents_flag,
                 'reserves' : reserves,
+                'total_reserve_price' : total_reserve_price,
+                'total_reserve_price_flag' : total_reserve_price_flag,
+                'reserves_len' : reserves_len,
+                'reserves_len_flag' : reserves_len_flag,
             }
             return render(request, 'mypage.html', context)
         except:

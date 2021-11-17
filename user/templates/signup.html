@@ -3,11 +3,26 @@
   {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<<<<<<< HEAD
 
 <title>sign-up</title>
  {% endblock %}
 
  {% block content %}
+=======
+    <!-- Compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/headers/">
+
+</head>
+
+
+<body class="bg-light">
+>>>>>>> origin
   {% if messages %}
     {% for message in messages %}
         <div class="row" style="margin:20px auto;">
@@ -20,6 +35,7 @@
     {% endfor %}
   {% endif %}
   {% if user.is_authenticated %}
+<<<<<<< HEAD
         {{user.mom_name}}
         {%endif%}
     <nav>
@@ -82,9 +98,125 @@
 
  {% endblock %}
 
+=======
+  {{user.mom_name}}
+  {%endif%}
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <h2>까꿍에 오신것을 환영합니다</h2>
+        <p class="lead">회원가입 해주세용. </p>
+      </div>
+  
+      <form method="POST" action="{% url 'signup' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+      <div class="row g-5">
+        <!-- <div class="col-md-7 col-lg-8"> -->
+          <!-- <h4 class="py-5 text-center">어떤 놀이인가요?</h4> -->
+          <form class="needs-validation" novalidate>
+            <div class="row g-3">
+              <div class="col-6">
+                <label for="mom_name" class="form-label">이름을 입력해주세요</label>
+                <input type="text" class="form-control" name="mom_name" id="mom_name" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  이름을 입력해주세요.
+                </div>
+              </div>
+  
+              <div class="col-8">
+                <label for="email" class="form-label">이메일을 입력해 주세요</label>
+                <textarea type="text" rows='1' class="form-control" name="email" id="email" placeholder="" value="" required></textarea>
+                <div class="invalid-feedback">
+                  이메일을 입력해 주세요.
+                </div>
+              </div>
+
+              <div class="col-5">
+                <label for="password" class="form-label">비밀번호를 입력해 주세요</label>
+                <input type='password' name="password1" rows='1' class="form-control" placeholder="비밀번호 입력 (5자리 이상)" value="" required></input>
+                <input type='password' name="password2" rows='1' class="form-control" placeholder="비밀번호 입력 확인" value="" required></input>
+                <div class="invalid-feedback">
+                  이메일을 입력해 주세요.
+                </div>
+              </div>
+
+  
+  
+              <div class="col-12">
+                <label for="baby_name" class="form-label">아이 이름을 입력해 주세요</label>
+                <input type="text" name="baby_name" id="baby_name" class="form-control" placeholder="" required>
+                <div class="invalid-feedback">
+                  아이 이름을 입력해 주세요.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="baby_name" class="form-label">아이 성별을 선택해 주세요</label>
+                <input class='gender_button' type='radio' class="form-control" name='baby_gender' value='female'>여아</input>
+                <input class='gender_button' type='radio' class="form-control" name='baby_gender' value='male'>남아</input>
+                <div class="invalid-feedback">
+                  아이 성별을 선택해 주세요.
+                </div>
+              </div>
+
+  
+              <div class="col-3">
+                  <label for="baby_birth" class="form-label">아이 생년월일 선택해 주세요</label>
+                  <input type="date" name='baby_birth' id="baby_birth" class="form-control" placeholder="" required>
+                  <div class="invalid-feedback">
+                    아이 생년월일 선택해 주세요.
+                  </div>
+              </div>
+
+              <div class="col-12">
+                <label for="address" class="form-label">주소를 입력해주세요</label>
+                <input type="textbox" name='address' id="address" class="form-control" placeholder="강남구 도곡동" required>
+                <div class="invalid-feedback">
+                  주소를 입력해주세요.
+                </div>
+            </div>
+
+            <div class="col-12">
+              <label for="phone_num" class="form-label">전화번호를 입력해주세요</label>
+              <input type="textbox" name='phone_num' id="phone_num" class="form-control" placeholder="전화번호 입력" required>
+              <div class="invalid-feedback">
+                전화번호를 입력해주세요.
+              </div>
+            </div>
+  
+          </form>
+          
+            <hr class="my-4">
+              
+            <button class="w-100 btn btn-primary btn-lg" type="submit" name="action">회원가입 하기</button>
+          </form>
+        <!-- </div> -->
+      </div>
+    </main>
+  
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">&copy; 2017–2021 Company Name</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy</a></li>
+        <li class="list-inline-item"><a href="#">Terms</a></li>
+        <li class="list-inline-item"><a href="#">Support</a></li>
+      </ul>
+    </footer>
+  </div>
+  
+  
+      <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  
+        <script src="form-validation.js"></script>
+    </body>
+
+
+</html>
+>>>>>>> origin
 
 <style>
-    nav{
+    /* nav{
         color: black;
         background-color: white;
         width: 100%;
@@ -171,7 +303,7 @@
       height: 6%;
       text-align: center;
     }
-        
+         */
 
 </style>
 
@@ -183,3 +315,5 @@
   
   }
 </script>
+
+

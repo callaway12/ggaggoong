@@ -53,7 +53,7 @@
       }
     </style>
 
-
+    
     <!-- Custom styles for this template -->
     <link href="form-validation.css" rel="stylesheet">
   </head>
@@ -110,12 +110,12 @@
       </div>
     </div>
     <div class="px-3 py-2 border-bottom mb-3">
-
+      
     </div>
   </header>
 
   <body class="bg-light">
-
+    
 <div class="container">
   <main>
     <div class="py-5 text-center">
@@ -198,8 +198,8 @@
                     최대나이(개월 수)
                     <input type="number" name="age_max" id="age_max" class="form-control" placeholder="40" required>
                 </div>
-
-
+                
+                
                 <div class="invalid-feedback">
                     콘텐츠 참가 가능한 아이의 나이를 입력해주세요.
                 </div>
@@ -213,26 +213,19 @@
 
             <div class="btn btn-outline-success" onclick="count_up()">추가하기 버튼</div>
             <div class="btn btn-outline-danger" onclick="count_down()">삭제하기 버튼</div>
-
+            
 
         </form>
-
+        
           <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="button" onclick="sendData()">제출</button>
+            
+          <button class="w-100 btn btn-primary btn-lg sub" type="button" onclick="sendData()">제출</button>
         </form>
       <!-- </div> -->
     </div>
   </main>
 
-  <footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; 2017–2021 Company Name</p>
-    <ul class="list-inline">
-      <li class="list-inline-item"><a href="#">Privacy</a></li>
-      <li class="list-inline-item"><a href="#">Terms</a></li>
-      <li class="list-inline-item"><a href="#">Support</a></li>
-    </ul>
-  </footer>
+
 </div>
 
 
@@ -264,7 +257,7 @@
                         </div>
                     </div>
                 </div>`;
-
+                
 
                 $("#detail_text").append(con_add);
                 detail_num = detail_num + 1;
@@ -307,11 +300,11 @@
 
 
             for (let i = 0; i < detailLength; i++) {
-
+                
                 bodyForm.append(`detail_${i}`, document.querySelector(`textarea#detail_${i}`).value);
                 bodyForm.append(`detail_img_${i}`, document.querySelector(`input#detail_img_${i}`).files[0]);
             }
-
+            
 
             let response = await fetch("/content/make/", {
                 method: "POST",
@@ -321,7 +314,7 @@
                 },
                 body: bodyForm,
             });
-
+            
             if(response.ok) {
                 await alert("성공");
                 window.location.href = response.url;
@@ -335,3 +328,5 @@
 
 
 </body>
+
+

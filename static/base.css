@@ -2,10 +2,18 @@ body {
     font-family: 'Gowun Dodum', sans-serif; 
 }
 
+td {
+    vertical-align: middle;
+}
+
 .reserve{
 margin-top : 10px;
 }
 
 .detail {
 margin-top : 5px;
+}
+
+.sub{
+margin-bottom : 30px;
 }
