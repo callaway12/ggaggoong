@@ -5,6 +5,7 @@
     {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     {% endblock %}
+
   {% block content %}
     {% if messages %}
     {% for message in messages %}
@@ -33,32 +34,36 @@
                             <h4>{{ new_content.sub_title_name }}</h4>
                         </div>
 
-                        <div class ="detail"> 진행일자 : {{ new_content.content_date }} </div>
-                        <div class ="detail"> 진행 시간 : {{ new_content.duration }} </div>
-                        <div class ="detail"> 장소 : {{ new_content.location }} </div>
-                        <div class ="detail"> 인원 : {{ new_content.people_number }} </div>
-                        <div class ="detail"> 나이 : {{ new_content.age_min }} ~ {{ new_content.age_max }} </div>
-                        <div class ="detail"> 가격 : {{ new_content.price }} </div>
+                        <div class ="detail"> <a style="color:gray">진행일자</a>  : {{ new_content.content_date|date:" Y M d일 D" }} </div>
+                        <div class ="detail"> <a style="color:gray">진행 시간</a> : {{ new_content.duration }} </div>
+                        <div class ="detail"> <a style="color:gray">장소</a>     : {{ new_content.location }} </div>
+                        <div class ="detail"> <a style="color:gray">인원</a>     : {{ new_content.people_number }} </div>
+                        <div class ="detail"> <a style="color:gray">나이</a>     : {{ new_content.age_min }} ~ {{ new_content.age_max }} </div>
+                        <div class ="detail"> <a style="color:gray">가격</a>     : {{ new_content.price }} </div>
 
 
-                        <div class="d-flex">
+<!--                            <div class="d-flex">-->
 
-                            {% if host_flag %}
-                                <h3>호스트 입니다 </h3>
-                            {% else %}
-                            {% if reserves_len >= new_content.people_number %}
-                            가득참
-                            {% else %}
-                            {{reserves_len}}
-                            {{new_content.people_number}}
-                            {% if reserve_available %}
-                            <a href="{% url 'Content:reserve' new_content.id %}"><button style="margin-top: 10px;" class="btn btn-outline-dark flex-shrink-0 reserve" type="button" name="action">결제하기</button></a>
-                            {% else %}
-                            <h3>이미 결제함 </h3>
-                            {% endif %}
-                            {% endif %}
-                            {% endif %}
-                        </div>
+                                {% if host_flag %}
+                                    <h3>호스트 입니다 </h3>
+                                {% else %}
+                                {% if reserves_len >= new_content.people_number %}
+                                가득참
+                                {% else %}
+                                <div> 예약현황 : {{reserves_len}}  / {{new_content.people_number}} </div>
+
+                                {% if reserve_available %}
+
+                              <div>
+                                  <a href="{% url 'Content:reserve' new_content.id %}"><button style="margin-top: 10px;" class="btn btn-outline-dark flex-shrink-0 reserve" type="button" name="action">결제하기</button></a>
+                              </div>
+
+                                {% else %}
+                                <h3>이미 결제함 </h3>
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                            </div>
                     </div>
                 </div>
 
@@ -88,22 +93,22 @@
     
 <br/>
 <br/>
-{% if host_flag %}
+<!--{% if host_flag %}-->
 
-    <h3>호스트 입니다 </h3>
-{% else %}
-{% if reserves_len >= new_content.people_number %}
-가득참
-{% else %}
-{{reserves_len}}
-{{new_content.people_number}}
-{% if reserve_available %}
-<a href="{% url 'Content:reserve' new_content.id %}"><button class="button waves-effect waves-light" name="action">결제하기</button></a>
-{% else %}
-<h3>이미 결제함 </h3>
-{% endif %}
-{% endif %}
-{% endif %}
+<!--    <h3>호스트 입니다 </h3>-->
+<!--{% else %}-->
+<!--{% if reserves_len >= new_content.people_number %}-->
+<!--가득참-->
+<!--{% else %}-->
+<!--{{reserves_len}}-->
+<!--{{new_content.people_number}}-->
+<!--{% if reserve_available %}-->
+<!--<a href="{% url 'Content:reserve' new_content.id %}"><button class="button waves-effect waves-light" name="action">결제하기</button></a>-->
+<!--{% else %}-->
+<!--<h3>이미 결제함 </h3>-->
+<!--{% endif %}-->
+<!--{% endif %}-->
+<!--{% endif %}-->
 
 
 <hr/>
