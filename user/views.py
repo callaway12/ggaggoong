@@ -73,27 +73,27 @@ def signup(request):
                 return redirect('home') #render(request, 'home.html', {'user':user})
     elif request.method == "GET" and request.user.id:
         return redirect('home')
-    print("회원가입 안됨")
+    # print("회원가입 안됨")
     return render(request, 'signup.html') 
 
 @login_required
 def host_signup(request):
-    print(request.user.id)
+    # print(request.user.id)
     try:
         # host = Host()
-        print('try')
+        # print('try')
         host = Host.objects.filter(user_id = request.user.id)
     except Host.DoesNotExist:
-        print('except')
+        # print('except')
         host = None
     # if host is not None:
-    #     print('if1')
+    #     # print('if1')
     #     return render(request, 'host_signup.html', {'host' : Host.objects.filter(user_id = request.user.id)})
     if request.method == 'POST':
-        print('if2')
+        # print('if2')
         if request.user.id:
-            print('if3')
-            print(request.user.id)
+            # print('if3')
+            # print(request.user.id)
             # user = User()
             host = Host()
             host.user_id = User.objects.get(id = request.user.id)
@@ -112,10 +112,10 @@ def host_signup(request):
             host.bank_num = request.POST["bank_num"]
             host.save()
             if host is not None:
-                print('ssibal')
+                # print('ssibal')
                 # auth.login(request, user)
                 return redirect('/user/home')
-    print("회원가입 안됨")
+    # print("회원가입 안됨")
     if request.method =='GET':
         if request.user.id is None:
             messages.warning(request, "회원가입 먼저 해주세요!")
@@ -175,7 +175,7 @@ def host_update(request):
     user_id = request.user.id
     host = Host.objects.get(user_id = user_id)
     if request.method == 'POST':
-        print(request.user.id)
+        # print(request.user.id)
         host.user_id = get_object_or_404(User, id=request.user.id)
         host.id_card1 = request.POST["id_card1"]
         host.id_card2 = request.POST["id_card2"]            
@@ -211,9 +211,9 @@ def mypage(request):
         # 호스트면 이거 보여주고 일반이면 안보여주고, 
         # to-do : 일반 사용자가 해당 컨텐츠에 지원하고 결제하는 부분까지 해야함
         try:
-            # print(User.objects.get(id=request.user.id))
-            # print(Contents.objects.filter(id=request.user.id))
-            # print(FAQ.objects.filter(questioner=request.user.id))
+            # # print(User.objects.get(id=request.user.id))
+            # # print(Contents.objects.filter(id=request.user.id))
+            # # print(FAQ.objects.filter(questioner=request.user.id))
             host_contents = Contents.objects.filter(host_id=request.user.id).order_by('-created_at')
             user = User.objects.get(id=request.user.id)
             faqs = FAQ.objects.filter(questioner=request.user.id).order_by('-created_at')
@@ -226,9 +226,9 @@ def mypage(request):
                 host_pagenated_reserves = [host_contents[i * count_per_page:(i+1) * count_per_page] for i in range((len(host_contents) + count_per_page - 1) // count_per_page) ]
             except:
                 host_pagenated_reserves = None
-            # print('asdfadsjkfnasdkvnak')
-            # print(host_pagenated_reserves)
-            # print('asdfadsjkfnasdkvnak')
+            # # print('asdfadsjkfnasdkvnak')
+            # # print(host_pagenated_reserves)
+            # # print('asdfadsjkfnasdkvnak')
 
 
             total_reserve_price = 0
@@ -261,7 +261,7 @@ def mypage(request):
                 Host.objects.filter(user_id = request.user).exists()
                 host_flag = True
                 host = Host.objects.get(user_id = request.user)
-                print('tru')
+                # print('tru')
                 if Contents.objects.filter(host_id = host).exists():
                     host_contents_flag = True
                     host_contents = Contents.objects.filter(host_id = host).exists()
@@ -276,7 +276,7 @@ def mypage(request):
             canceled_reserves_len = len(canceled_reserves)
             first_pagenated_reserves = pagenated_reserves[:1]
             rest_pagenated_reserves = pagenated_reserves[1:]
-            print(first_pagenated_reserves)
+            # print(first_pagenated_reserves)
             context= {
                 'user' : user,
                 'host_contents' : host_contents,
@@ -308,7 +308,7 @@ def host_mypage(request):
         try:
 
             host = Host.objects.get(user_id=request.user.id)
-            print(host)
+            # print(host)
             context= {
                 'host':host
             }
